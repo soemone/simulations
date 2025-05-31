@@ -5,15 +5,7 @@
 	import Drawer from '$lib/components/drawer.svelte';
 	import Slider from '$lib/components/slider.svelte';
 	import { simulation } from '$lib/simulation';
-	import {
-		Circle,
-		clear,
-		DrawController,
-		DrawControllerM,
-		Path,
-		setCentralPositionMode,
-		showFps
-	} from '$lib/utils/canvas';
+	import { Circle, DrawController, Path, setCentralPositionMode, showFps } from '$lib/utils/canvas';
 	import { Vec } from '$lib/utils/vector';
 	import { onMount } from 'svelte';
 
@@ -67,7 +59,6 @@
 		showFps(true);
 
 		const draw = (frameTime: number) => {
-			// frameTime = 0.00471;
 			for (let i = 0; i < values.timeStep; i++) {
 				shm.phase += values.phaseSpeed * frameTime;
 				shm.time += frameTime;
@@ -80,7 +71,6 @@
 			}
 			values.showPath ? objects!.path.draw() : null;
 			values.showCircle ? objects!.circle.draw() : null;
-			return [-values.boxX, -values.boxY, values.boxX, values.boxY];
 		};
 
 		let drawController = DrawController(draw);
@@ -224,8 +214,8 @@
 
 	<Checkbox bind:checked={values.showCircle}>Show circle</Checkbox>
 	<Checkbox bind:checked={values.showPath}>Show path</Checkbox>
-	<Checkbox bind:checked={values.showFPS} onCheckedChange={(value: boolean) => showFps(value)}
-		>Show FPS</Checkbox
-	>
+	<Checkbox bind:checked={values.showFPS} onCheckedChange={(value: boolean) => showFps(value)}>
+		Show FPS
+	</Checkbox>
 	<Button onclick={reset}>Reset</Button>
 </Drawer>

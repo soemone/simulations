@@ -257,36 +257,3 @@ export const DrawController = (drawFunction: Function) => {
 };
 
 export const getContext = () => ctx;
-
-export class DrawControllerM {
-	draw: Function;
-	paused: boolean | null;
-	private id: number;
-
-	constructor(draw: Function) {
-		this.draw = draw;
-		this.paused = null;
-		this.id = -1;
-	}
-
-	pause() {
-		this.paused = true;
-		window.cancelAnimationFrame(this.id);
-	}
-
-	run() {
-		this.paused = false;
-
-		const loop = () => {
-			ctx?.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-			this.draw();
-			if (!this.paused) window.requestAnimationFrame(loop);
-		};
-
-		window.requestAnimationFrame(loop);
-	}
-
-	isRunning() {
-		return (this.paused ?? true) ? false : true;
-	}
-}

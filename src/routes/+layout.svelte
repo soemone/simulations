@@ -15,7 +15,9 @@
 
 			if ($simulation.paused === null) $simulation.paused = false;
 			$simulation.paused = !$simulation.paused;
-		} else if (event.code === 'b' || event.key === 'b' || event.keyCode == 98) {
+		} 
+		// b key moves to the "simulation selecttion" page, ie. the home page
+		else if (event.code === 'b' || event.key === 'b' || event.keyCode == 98) {
 			$simulation = { ...simulationDefaults };
 			goto('/');
 		}
