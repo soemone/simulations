@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@import 'tailwindcss';
+@tailwind utilities;
+
+* {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+}
+
+:root {
+	--default-font-family: 'Inter';
+
+	--background: hsl(195, 6%, 12%);
+	--foreground: hsl(51, 90%, 75%);
+	--foreground-disabled: hsl(51, 50%, 75%);
+
+	--primary: hsl(200, 15%, 6%);
+	--primary-foreground: hsl(205, 5%, 40%);
+
+	--secondary: hsl(60, 8%, 30%);
+	--secondary-foreground: hsl(51, 100%, 48%);
+	--secondary-foreground-disabled: hsl(51, 50%, 48%);
+}
+
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-foreground-disabled: var(--foreground-disabled);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-secondary-foreground-disabled: var(--secondary-foreground-disabled);
+
+	--animate-playpause: playpause 0.3s ease-in-out;
+
+	@keyframes playpause {
+		0% {
+			transform: scale(1);
+			opacity: 1;
+		}
+		100% {
+			transform: scale(1.75);
+			opacity: 0;
+		}
+	}
+}
+
+@layer base {
+	* {
+		/* @apply border-border outline-ring/50; */
+	}
+
+	body {
+		@apply bg-background text-foreground;
+	}
+}
