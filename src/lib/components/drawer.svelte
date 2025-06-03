@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { simulation } from '$lib/simulation';
+	import { cn } from '$lib/utils';
 	import { PanelRightClose, PanelRightOpen } from '@lucide/svelte';
 	import { Button } from 'bits-ui';
 	import { onMount } from 'svelte';
 
 	let prevPaused = $state(false);
-	let { open = $bindable(false), children, title } = $props();
+	let { open = $bindable(false), children, title, ...restProps } = $props();
 
 	onMount(() => (prevPaused = $simulation.paused ?? false));
 
@@ -44,13 +45,15 @@
 </Button.Root>
 
 <span
-	class="fixed top-0 h-screen w-90 transition-all not-sm:w-full {open
-		? 'right-0'
-		: 'right-[-100%]'} p-2"
+	class={cn(
+		'fixed top-0 h-screen w-90 p-2 transition-all not-sm:w-full',
+		open ? 'right-0' : 'right-[-100%]',
+		{...restProps}.class ?? ''
+	)}
 >
 	<div class="bg-primary shadow-primary flex h-full w-full flex-col rounded-md shadow-lg">
 		<div
-			class="text-foreground flex items-center justify-between p-2 text-center text-2xl font-bold"
+			class="flex items-center justify-between p-2 text-center text-2xl font-bold"
 		>
 			{title}
 		</div>

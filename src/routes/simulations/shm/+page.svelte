@@ -104,7 +104,7 @@
 <svelte:window onresize={windowResize} />
 
 <Canvas></Canvas>
-<Drawer title="SHM">
+<Drawer title="SHM" class="text-foreground-readable">
 	<div class="relative w-full text-sm">
 		A simulation that models simple harmonic motion in 2 dimensions
 		<br />

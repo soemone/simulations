@@ -11,17 +11,28 @@
 	-ms-box-sizing: border-box;
 }
 
+::selection {
+	background-color: hsla(51, 60%, 55%, 0.7);
+	color: var(--primary);
+}
+
+::-moz-selection {
+	background-color: hsla(51, 60%, 55%, 0.7);
+	color: var(--primary);
+}
+
 :root {
 	--default-font-family: 'Inter';
 
 	--background: hsl(195, 6%, 12%);
 	--foreground: hsl(51, 90%, 75%);
-	--foreground-disabled: hsl(51, 50%, 75%);
+	--foreground-readable: hsl(51, 45%, 60%);
+	--foreground-disabled: hsl(51, 25%, 45%);
 
-	--primary: hsl(200, 15%, 6%);
+	--primary: hsl(200, 15%, 8%);
 	--primary-foreground: hsl(205, 5%, 40%);
 
-	--secondary: hsl(60, 8%, 30%);
+	--secondary: hsl(60, 5%, 30%);
 	--secondary-foreground: hsl(51, 100%, 48%);
 	--secondary-foreground-disabled: hsl(51, 50%, 48%);
 }
@@ -29,6 +40,7 @@
 @theme inline {
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
+	--color-foreground-readable: var(--foreground-readable);
 	--color-foreground-disabled: var(--foreground-disabled);
 	--color-primary: var(--primary);
 	--color-primary-foreground: var(--primary-foreground);
@@ -51,10 +63,6 @@
 }
 
 @layer base {
-	* {
-		@apply box-content
-	}
-
 	body {
 		@apply bg-background text-foreground;
 	}

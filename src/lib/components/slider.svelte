@@ -57,8 +57,10 @@
 	{@render children()}
 	<span class="bg-primary-foreground/50 flex gap-0 rounded-full">
 		<span
-			class="mx-1 w-fit min-w-14 text-center font-bold
-			{disabled ? 'text-foreground-disabled' : 'text-foreground'}"
+			class={cn(
+				'mx-1 w-fit min-w-14 text-center font-bold',
+				disabled ? 'text-foreground-disabled' : 'text-foreground'
+			)}
 			onclick={focus}
 			onfocus={focus}
 			role="button"

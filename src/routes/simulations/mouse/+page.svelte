@@ -91,8 +91,8 @@
 
 <svelte:body onmousemove={mousemove} ontouchmove={touchmove} />
 <Canvas></Canvas>
-<Drawer title="Mouse" bind:open>
-	<div class="relative w-full text-sm">
+<Drawer title="Mouse" bind:open class="text-foreground-readable">
+	<div class="relative w-full text-sm ">
 		A thing that follows the mouse cursor. To smoothen the animation, the objects are linearly
 		interpolated to the cursor.
 		<br />
