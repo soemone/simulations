@@ -2,8 +2,9 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import PauseAnimate from '$lib/components/pause_animate.svelte';
-	import { simulation, simulationDefaults } from '$lib/simulation';
+	import { direction, simulation, simulationDefaults } from '$lib/simulation';
 	import '../app.css';
+	import PageTransition from '$lib/components/page_transition.svelte';
 
 	let { children } = $props();
 
@@ -17,7 +18,8 @@
 			$simulation.paused = !$simulation.paused;
 		} 
 		// b key moves to the "simulation selecttion" page, ie. the home page
-		else if (event.code === 'b' || event.key === 'b' || event.keyCode == 98) {
+		else if (page.url.pathname != '/' && (event.code === 'b' || event.key === 'b' || event.keyCode == 98)) {
+			$direction = 'none';
 			$simulation = { ...simulationDefaults };
 			goto('/');
 		}
@@ -26,7 +28,10 @@
 
 <svelte:body onkeypress={keypress} />
 
-{#if page.url.pathname.startsWith('/simulations')}
-	<PauseAnimate paused={$simulation.paused} />
-{/if}
-{@render children()}
+<PageTransition key={page.url}>
+	{#if page.url.pathname.startsWith('/simulations')}
+		<PauseAnimate paused={$simulation.paused} />
+	{/if}
+
+	{@render children()}
+</PageTransition>

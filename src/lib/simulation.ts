@@ -10,6 +10,8 @@ export interface SimulationState {
 	circleColor: string;
 }
 
+export type Direction = 'left' | 'right' | 'none';
+
 export const simulationDefaults: SimulationState = {
 	paused: null,
 	drawerPause: true,
@@ -19,3 +21,4 @@ export const simulationDefaults: SimulationState = {
 };
 
 export const simulation = writable<SimulationState>({ ...simulationDefaults });
+export const direction = writable<Direction>('none');

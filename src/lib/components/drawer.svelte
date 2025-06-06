@@ -47,7 +47,7 @@
 <span
 	class={cn(
 		'fixed top-0 h-screen w-90 p-2 transition-all not-sm:w-full',
-		open ? 'right-0' : 'right-[-100%]',
+		open ? 'right-0 opacity-100' : 'right-[-100%] opacity-0',
 		{...restProps}.class ?? ''
 	)}
 >

@@ -49,20 +49,104 @@
 	--color-secondary-foreground-disabled: var(--secondary-foreground-disabled);
 
 	--animate-playpause: playpause 0.3s ease-in-out;
+	--animate-out-left: out-left 0.2s ease-in-out forwards;
+	--animate-out-right: out-right 0.2s ease-in-out forwards;
+	/* Using forwards here for some reason used to cause position: fixed elements to also cause scrollbars to appear
+	   it does not seem to be occuring anymore though
+	 */
+	--animate-in-left: in-left 0.2s ease-in-out forwards;
+	--animate-in-right: in-right 0.2s ease-in-out forwards;
+	--animate-fade-out: fade-out 0.2s ease-in-out forwards;
+	--animate-fade-in: fade-in 0.2s ease-in-out forwards;
 
 	@keyframes playpause {
 		0% {
 			transform: scale(1);
 			opacity: 1;
 		}
+
 		100% {
 			transform: scale(1.75);
 			opacity: 0;
 		}
 	}
+
+	@keyframes out-left {
+		0% {
+			transform: translate(0);
+			opacity: 1;
+		}
+
+		100% {
+			transform: translate(150%);
+			opacity: 0;
+		}
+	}
+
+	@keyframes out-right {
+		0% {
+			transform: translate(0);
+			opacity: 1;
+		}
+
+		100% {
+			transform: translate(-150%);
+			opacity: 0;
+		}
+	}
+
+	@keyframes in-left {
+		0% {
+			transform: translate(50%);
+			opacity: 0;
+		}
+
+		100% {
+			transform: translate(0);
+			opacity: 1;
+		}
+	}
+
+	@keyframes in-right {
+		0% {
+			transform: translate(-50%);
+			opacity: 0;
+		}
+
+		100% {
+			transform: translate(0);
+			opacity: 1;
+		}
+	}
+
+	@keyframes fade-in {
+		0% {
+			opacity: 0;
+		}
+		
+		100% {
+			opacity: 1;
+		}
+	}
+
+	
+	@keyframes fade-out {
+		0% {
+			opacity: 1;
+		}
+		
+		100% {
+			opacity: 0;
+		}
+	}
+
 }
 
 @layer base {
+	html {
+		@apply overflow-hidden
+	}
+
 	body {
 		@apply bg-background text-foreground;
 	}
