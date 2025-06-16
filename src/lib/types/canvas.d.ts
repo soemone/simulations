@@ -4,16 +4,18 @@ export interface DrawOptions {
 	stroke?: string | CanvasGradient | CanvasPattern;
 	lineWidth?: number;
 	fill?: string | CanvasGradient | CanvasPattern;
+	drawFromCenter?: boolean;
 }
 
 export interface PathOptions extends DrawOptions {
 	maxCount?: number;
 	watchStart?: boolean;
 	start: Vec;
+	afterEvery?: number;
 }
 
 export interface CircleOptions extends DrawOptions {
-	radius?: number;
+	radius: number;
 	pos: Vec;
 }
 

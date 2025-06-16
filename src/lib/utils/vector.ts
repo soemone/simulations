@@ -711,14 +711,26 @@ export class Vec {
 	}
 
 	/**
-	 * Sets the coordinates of this vector
+	 * Sets the coordinates of this vector using given coordinates
 	 * @param x Optional x coordinate (defaults to 0)
 	 * @param y Optional y coordinate (defaults to 0)
 	 * @returns This vector for chaining
 	 */
 	set(x?: number, y?: number) {
-		this._x = x || 0;
-		this._y = y || 0;
+		this._x = x ?? 0;
+		this._y = y ?? 0;
+		this._call_change();
+		return this;
+	}
+
+	/**
+	 * Sets the coordinates of this vector using a vector
+	 * @param a Vector
+	 * @returns This vector for chaining
+	 */
+	setVec(a: Vec) {
+		this._x = a.x;
+		this._y = a.y;
 		this._call_change();
 		return this;
 	}

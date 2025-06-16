@@ -5,7 +5,14 @@
 	import Drawer from '$lib/components/drawer.svelte';
 	import Slider from '$lib/components/slider.svelte';
 	import { simulation } from '$lib/simulation';
-	import { Circle, DrawController, Path, setCentralPositionMode, showFps } from '$lib/utils/canvas';
+	import {
+		Circle,
+		DrawController,
+		initCanvas,
+		Path,
+		setDrawFromCenter,
+		showFps
+	} from '$lib/utils/canvas';
 	import { Vec } from '$lib/utils/vector';
 	import { onMount } from 'svelte';
 
@@ -36,23 +43,25 @@
 		time: 0
 	};
 
-	let objects = $state<null | { path: ReturnType<typeof Path>; circle: ReturnType<typeof Circle> }>(
-		null
-	);
+	let objects = $state<null | { path: Path; circle: Circle }>(null);
 
 	const init = () => {
 		$simulation.drawerPause = false;
-		setCentralPositionMode(false);
+		setDrawFromCenter(true);
 		windowResize();
 
 		objects = {
-			circle: Circle({ pos: shm.pos, radius: values.circleRadius, fill: $simulation.circleColor }),
-			path: Path({
+			path: new Path({
 				maxCount: values.maxCount,
 				start: shm.pos,
 				watchStart: true,
 				stroke: $simulation.pathColor,
 				lineWidth: values.pathWidth
+			}),
+			circle: new Circle({
+				pos: shm.pos,
+				radius: values.circleRadius,
+				fill: $simulation.circleColor
 			})
 		};
 
@@ -69,11 +78,12 @@
 				);
 				shm.pos.lerp(new_pos, values.lerpFactor);
 			}
-			values.showPath ? objects!.path.draw() : null;
-			values.showCircle ? objects!.circle.draw() : null;
+
+			objects!.path.setHidden(!values.showPath);
+			objects!.circle.setHidden(!values.showCircle);
 		};
 
-		let drawController = DrawController(draw);
+		let drawController = new DrawController(draw);
 
 		$effect(() => {
 			if ($simulation.paused) {
@@ -84,7 +94,10 @@
 		});
 	};
 
-	onMount(() => init());
+	onMount(() => {
+		initCanvas();
+		init();
+	});
 
 	const windowResize = () => {
 		windowSize = Vec.new(

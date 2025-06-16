@@ -3,7 +3,14 @@
 	import Drawer from '$lib/components/drawer.svelte';
 	import Slider from '$lib/components/slider.svelte';
 	import Checkbox from '$lib/components/checkbox.svelte';
-	import { Circle, DrawController, Path, setCentralPositionMode, showFps } from '$lib/utils/canvas';
+	import {
+		Circle,
+		DrawController,
+		initCanvas,
+		Path,
+		setDrawFromCenter,
+		showFps
+	} from '$lib/utils/canvas';
 	import { Vec } from '$lib/utils/vector';
 	import Button from '$lib/components/button.svelte';
 	import { onMount } from 'svelte';
@@ -27,37 +34,35 @@
 	let values = $state(defaults);
 	let open = $state(false);
 
-	let objects = $state<null | { path: ReturnType<typeof Path>; circle: ReturnType<typeof Circle> }>(
-		null
-	);
+	let objects = $state<null | { path: Path; circle: Circle }>(null);
 
-	setCentralPositionMode(true);
+	// Put (0, 0) at the left most top corner of the page
+	setDrawFromCenter(false);
 
 	const init = () => {
 		$simulation.drawerPause = true;
 
 		objects = {
-			circle: Circle({
-				pos: mouse.dispPos,
-				radius: values.circleRadius,
-				fill: $simulation.circleColor
-			}),
-			path: Path({
+			path: new Path({
 				maxCount: values.maxCount,
 				watchStart: true,
 				start: mouse.dispPos,
 				stroke: $simulation.pathColor,
 				lineWidth: values.pathWidth
+			}),
+			circle: new Circle({
+				pos: mouse.dispPos,
+				radius: values.circleRadius,
+				fill: $simulation.circleColor
 			})
 		};
 
 		showFps(values.showFPS);
 
-		let drawController = DrawController((frameTime: number) => {
+		let drawController = new DrawController((frameTime: number) => {
 			mouse.dispPos.lerp(mouse.toPos, values.lerpFactor);
-			objects!.path.add(mouse.dispPos);
-			values.showPath ? objects!.path.draw() : null;
-			values.showCircle ? objects!.circle.draw() : null;
+			objects?.circle.setHidden(!values.showCircle);
+			objects?.path.setHidden(!values.showPath);
 		});
 
 		$effect(() => {
@@ -79,7 +84,10 @@
 		mouse.toPos.y = event.touches[0].clientY * window.devicePixelRatio;
 	};
 
-	onMount(() => init());
+	onMount(() => {
+		initCanvas();
+		init();
+	});
 
 	const reset = () => {
 		values = defaults;
@@ -92,7 +100,7 @@
 <svelte:body onmousemove={mousemove} ontouchmove={touchmove} />
 <Canvas></Canvas>
 <Drawer title="Mouse" bind:open class="text-foreground-readable">
-	<div class="relative w-full text-sm ">
+	<div class="relative w-full text-sm">
 		A thing that follows the mouse cursor. To smoothen the animation, the objects are linearly
 		interpolated to the cursor.
 		<br />

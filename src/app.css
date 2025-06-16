@@ -51,11 +51,11 @@
 	--animate-playpause: playpause 0.3s ease-in-out;
 	--animate-out-left: out-left 0.2s ease-in-out forwards;
 	--animate-out-right: out-right 0.2s ease-in-out forwards;
-	/* Using forwards here for some reason used to cause position: fixed elements to also cause scrollbars to appear
-	   it does not seem to be occuring anymore though
+	/* Using forwards here for some reason causes position: fixed elements to also cause the document to overflow 
+	   in some cases
 	 */
-	--animate-in-left: in-left 0.2s ease-in-out forwards;
-	--animate-in-right: in-right 0.2s ease-in-out forwards;
+	--animate-in-left: in-left 0.2s ease-in-out;
+	--animate-in-right: in-right 0.2s ease-in-out;
 	--animate-fade-out: fade-out 0.2s ease-in-out forwards;
 	--animate-fade-in: fade-in 0.2s ease-in-out forwards;
 

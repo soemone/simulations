@@ -20,6 +20,14 @@
 			quirk: 'in two dimensions (or three?)',
 			location: '/simulations/shm'
 		},
+
+		{
+			name: 'Gravity',
+			description: 'Model gravity inaccurately',
+			quirk: 'in the works!!',
+			location: '/simulations/gravity'
+		},
+
 		{
 			name: 'Mouse',
 			description: 'A cursor trail visualizer',
@@ -58,7 +66,7 @@
 		container?.addEventListener('animationend', async () => {
 			// Prevent multiple animations from causing many goto calls
 			if (navigating) return;
-			
+
 			navigating = true;
 			$direction = internalDirection;
 			goto(a.getAttribute('href') ?? '/');
